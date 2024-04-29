@@ -8,7 +8,7 @@ TARGET_BIN = /usr/local/bin/
 all: $(program)
 
 $(program): $(SRC_PROGRAM) 
-	$(CC) -o $@ $< ${INC} ${LIB}
+	$(CC) -D DEBUG -o $@ $< ${INC} ${LIB}
 
 clean:
 	rm -f *.o

@@ -30,4 +30,18 @@ typedef struct _Controller {
 extern Controller *cREST_dispatch(int, char *[], char *[], Controller *[]);
 extern void cREST_init_controller(Controller *, char *, Method, Method, Method, Method);
 
+#ifdef DEBUG
+#define DEBUG_PRINT(fmt, ...) \
+    do { \
+        FILE *pFile = NULL; \
+        pFile = fopen("/tmp/crest.log", "a+"); \
+        if (NULL != pFile) \
+            fprintf(pFile, "[DEBUG] %s:%d: " fmt "\n", __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            fclose(pFile); \
+    } while (0)
+
+#else
+#define DEBUG_PRINT(fmt, ...) 
+#endif
+
 #endif

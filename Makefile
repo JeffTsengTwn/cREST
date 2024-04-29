@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -fPIC
+CFLAGS = -Wall -fPIC -D DEBUG
 LDFLAGS = -shared
 TARGET_LIB = libcrest.so
 SRC_LIB = cREST.c
