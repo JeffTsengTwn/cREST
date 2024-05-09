@@ -1,28 +1,25 @@
 # cREST
-This is a simple RESTful API framework base on CGI.  
+This is a simple RESTful API framework base on CGI.
 You can run it with lighttpd + FastCGI.
-## Build and install
+
+## Build and install cREST library
 ```bash
 make clean
 make all
 sudo make uninstall
-sudo make uinstall
+sudo make install
 ```
-## Build  Example APP 
-```bash
-cd example
-make clean
-make all
-sudo make uninstall
-sudo make uinstall
-```
-## Run Example APP
+
+## Prerequisites
 1. Install dependency packages for compiling lighttpd.
 ```bash
 sudo apt-get install autoconf
 sudo apt-get install automake
 sudo apt-get install libtool
 sudo apt-get install m4
+sudo apt-get install pkg-config
+sudo apt-get install libpcre2-dev
+sudo apt-get install zlib1g-dev
 ```
 2. Checkout lighttpd source code.
 ```bash
@@ -34,7 +31,7 @@ git pull
 ```bash
 cd lighttpd1.4
 ./autogen.sh
-./configure -C --prefix=/usr/local  
+./configure -C --prefix=/usr/local
 make -j 4
 make check
 sudo make install
@@ -55,8 +52,21 @@ cd fcgi2
 make
 make install
 ```
-7. Run with lighttpd.
+
+## Apps
+
+All applications are located under the `apps/` directory.
+
+### Example APP (Hello World)
 ```bash
-lighttpd -D -f lighttpd.conf
+cd apps/example
+make clean
+make all
+sudo make install
 ```
-8. Visit http://127.0.0.1:8080/rest/hello
+Run with lighttpd:
+```bash
+lighttpd -D -f apps/example/lighttpd.conf
+```
+Visit http://127.0.0.1:8080/rest/hello
+

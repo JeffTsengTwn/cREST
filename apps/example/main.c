@@ -8,11 +8,11 @@ static void PrintEnv(char **envp)
     for( ; *envp != NULL; envp++) {
         DEBUG_PRINT("%s\n", *envp);
     }
-   
+
 }
 
-// 405 頁面的 HTML 內容
-const char *methodNotAllowedPage = 
+// HTML content for the 405 page
+const char *methodNotAllowedPage =
     "<!DOCTYPE html>\n"
     "<html lang=\"en\">\n"
     "<head>\n"
@@ -39,43 +39,56 @@ const char *methodNotAllowedPage =
     "</body>\n"
     "</html>\n";
 
-void handleGet(int argc, char *argv[], char *envp[], Response *response) {
-    response->code = 200;
-    sprintf(response->type, "application/json");
-    sprintf(response->content, "{\"message\" : \"Hello world!\"}");
+void handleGet(Request *request, Response *response) {
+    cJSON *body = cJSON_CreateObject();
+    const char *name = cREST_get_param(request, "name");
+
+    cJSON_AddStringToObject(body, "message", "Hello world!");
+    if (name) {
+        cJSON_AddStringToObject(body, "name", name);
+    }
+
+    cREST_set_json_response(response, 200, body);
+}
+
+void handlePost(Request *request, Response *response) {
+    if (NULL == request->json) {
+        cREST_set_error_response(response, 400, "Request body must be JSON.");
+        return;
+    }
+
+    /* Echo the JSON body straight back to demonstrate PATCH/POST + JSON support. */
+    cREST_set_json_response(response, 201, cJSON_Duplicate(request->json, 1));
 }
 
 void main(int argc, char *argv[], char *env[]) {
 
     FCGX_Stream *in, *out, *err;
     FCGX_ParamArray envp;
-    int count = 0;
 
-    // 初始化控制器
+    // Initialize the controller
     Controller helloController;
-    cREST_init_controller(&helloController, "/hello", handleGet, NULL, NULL, NULL);
+    cREST_init_controller(&helloController, "/hello", handleGet, NULL, handlePost, NULL, handlePost);
 
-    // 註冊控制器
-    Controller *controllers[] = {&helloController};
+    // Register controllers (NULL-terminated)
+    Controller *controllers[] = {&helloController, NULL};
     Controller *controller = NULL;
     Response *response = NULL;
-    // FastCGI 初始化
+    // Initialize FastCGI
     FCGX_Init();
 
     DEBUG_PRINT("After FCGX_Init()");
-    // 處理 FastCGI 請求
+    // Handle FastCGI requests
     while (FCGX_Accept(&in, &out, &err, &envp) >= 0) {
         DEBUG_PRINT("Enter FCGX_Accept loop");
 
         PrintEnv(envp);
-        setenv("PATH_INFO", FCGX_GetParam("PATH_INFO", envp),1);
-        setenv("REQUEST_METHOD", FCGX_GetParam("REQUEST_METHOD", envp),1);
 
-        // 處理請求
-        controller =  cREST_dispatch(0, NULL, NULL, controllers);
-            
+        // Handle the request
+        controller = cREST_dispatch(in, envp, controllers);
+
         if(controller) {
-            // 將回應寫回 FastCGI
+            // Write the response back to FastCGI
             response = &(controller->response);
             FCGX_FPrintF(out, "Status: %d OK\r\n", response->code);
             FCGX_FPrintF(out, "Content-type: %s\r\n\r\n", response->type);

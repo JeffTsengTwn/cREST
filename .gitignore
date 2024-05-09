@@ -1,0 +1,4 @@
+# Compiled binaries
+*.so
+*.o
+rest_ctrl
