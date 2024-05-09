@@ -6,7 +6,7 @@ You can run it with lighttpd + FastCGI.
 make clean
 make all
 sudo make uninstall
-sudo make uinstall
+sudo make install
 ```
 ## Build  Example APP 
 ```bash
@@ -14,7 +14,7 @@ cd example
 make clean
 make all
 sudo make uninstall
-sudo make uinstall
+sudo make install
 ```
 ## Run Example APP
 1. Install dependency packages for compiling lighttpd.
@@ -23,6 +23,9 @@ sudo apt-get install autoconf
 sudo apt-get install automake
 sudo apt-get install libtool
 sudo apt-get install m4
+sudo apt-get install pkg-config
+sudo apt-get install libpcre2-dev
+sudo apt-get install zlib1g-dev
 ```
 2. Checkout lighttpd source code.
 ```bash
