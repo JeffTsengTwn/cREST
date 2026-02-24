@@ -70,5 +70,3 @@ lighttpd -D -f apps/example/lighttpd.conf
 ```
 Visit http://127.0.0.1:8080/rest/hello
 
-### Redfish APP
-See [apps/redfish/README.md](apps/redfish/README.md) for details.
