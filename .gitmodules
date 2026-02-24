@@ -1,0 +1,3 @@
+[submodule "apps/redfish"]
+	path = apps/redfish
+	url = https://github.com/JeffTsengTwn/cRedfish.git

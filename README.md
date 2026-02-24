@@ -53,6 +53,15 @@ make
 make install
 ```
 
+## Clone with submodules
+```bash
+git clone --recurse-submodules https://github.com/JeffTsengTwn/cREST.git
+```
+If you already cloned without `--recurse-submodules`:
+```bash
+git submodule update --init --recursive
+```
+
 ## Apps
 
 All applications are located under the `apps/` directory.
@@ -69,4 +78,18 @@ Run with lighttpd:
 lighttpd -D -f apps/example/lighttpd.conf
 ```
 Visit http://127.0.0.1:8080/rest/hello
+
+### Redfish APP (git submodule)
+The Redfish application is managed as a git submodule from [cRedfish](https://github.com/JeffTsengTwn/cRedfish).
+See [apps/redfish/README.md](apps/redfish/README.md) for details.
+```bash
+cd apps/redfish
+make clean
+make all
+sudo make install
+```
+Run with lighttpd:
+```bash
+lighttpd -D -f apps/redfish/lighttpd.conf
+```
 
