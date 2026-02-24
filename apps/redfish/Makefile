@@ -1,6 +1,6 @@
 CC = gcc
 SRC_PROGRAM = main.c redfish_handler.c
-INC = -I /usr/include -I ..  #include headers的位置
+INC = -I /usr/include -I ../..  #include headers的位置
 LIB = -lcrest -lfcgi         #include libraries的位置
 program = redfish_ctrl
 TARGET_BIN = /usr/local/bin/

@@ -1,22 +1,16 @@
 # cREST
 This is a simple RESTful API framework base on CGI.
 You can run it with lighttpd + FastCGI.
-## Build and install
+
+## Build and install cREST library
 ```bash
 make clean
 make all
 sudo make uninstall
 sudo make install
 ```
-## Build  Example APP
-```bash
-cd example
-make clean
-make all
-sudo make uninstall
-sudo make install
-```
-## Run Example APP
+
+## Prerequisites
 1. Install dependency packages for compiling lighttpd.
 ```bash
 sudo apt-get install autoconf
@@ -58,24 +52,37 @@ cd fcgi2
 make
 make install
 ```
-7. Run with lighttpd.
-```bash
-lighttpd -D -f lighttpd.conf
-```
-8. Visit http://127.0.0.1:8080/rest/hello
 
-## Build Redfish APP
+## Apps
+
+All applications are located under the `apps/` directory.
+
+### Example APP (Hello World)
 ```bash
-cd redfish
+cd apps/example
 make clean
 make all
 sudo make install
 ```
-## Run Redfish APP
+Run with lighttpd:
 ```bash
-lighttpd -D -f redfish/lighttpd.conf
+lighttpd -D -f apps/example/lighttpd.conf
 ```
-## Redfish API Endpoints
+Visit http://127.0.0.1:8080/rest/hello
+
+### Redfish APP
+```bash
+cd apps/redfish
+make clean
+make all
+sudo make install
+```
+Run with lighttpd:
+```bash
+lighttpd -D -f apps/redfish/lighttpd.conf
+```
+
+#### Redfish API Endpoints
 | Method | URI | Description |
 |--------|-----|-------------|
 | GET | `/redfish` | Redfish version |
@@ -89,7 +96,7 @@ lighttpd -D -f redfish/lighttpd.conf
 | GET | `/redfish/v1/AccountService` | Account Service |
 | GET | `/redfish/v1/SessionService` | Session Service |
 
-### Example
+#### Example
 ```bash
 # Get Redfish version
 curl http://127.0.0.1:8080/redfish
