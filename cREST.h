@@ -7,7 +7,7 @@
 
 #define PATH_SIZE 256
 #define TYPE_SIZE 256
-#define CONTENT_SIZE 1024
+#define CONTENT_SIZE 4096
 
 typedef struct _Response {
     int code;
@@ -23,25 +23,27 @@ typedef struct _Controller {
     Method doPost;
     Method doPut;
     Method doDelete;
+    Method doPatch;
     Method doUnsupport;
     Response response;
 } Controller;
 
 extern Controller *cREST_dispatch(int, char *[], char *[], Controller *[]);
-extern void cREST_init_controller(Controller *, char *, Method, Method, Method, Method);
+extern void cREST_init_controller(Controller *, char *, Method, Method, Method, Method, Method);
 
 #ifdef DEBUG
 #define DEBUG_PRINT(fmt, ...) \
     do { \
         FILE *pFile = NULL; \
         pFile = fopen("/tmp/crest.log", "a+"); \
-        if (NULL != pFile) \
+        if (NULL != pFile) { \
             fprintf(pFile, "[DEBUG] %s:%d: " fmt "\n", __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             fclose(pFile); \
+        } \
     } while (0)
 
 #else
-#define DEBUG_PRINT(fmt, ...) 
+#define DEBUG_PRINT(fmt, ...)
 #endif
 
 #endif

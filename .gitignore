@@ -1,0 +1,5 @@
+# Compiled binaries
+*.so
+*.o
+rest_ctrl
+redfish_ctrl
