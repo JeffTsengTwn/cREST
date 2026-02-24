@@ -1,5 +1,5 @@
 # cREST
-This is a simple RESTful API framework base on CGI.  
+This is a simple RESTful API framework base on CGI.
 You can run it with lighttpd + FastCGI.
 ## Build and install
 ```bash
@@ -8,7 +8,7 @@ make all
 sudo make uninstall
 sudo make install
 ```
-## Build  Example APP 
+## Build  Example APP
 ```bash
 cd example
 make clean
@@ -37,7 +37,7 @@ git pull
 ```bash
 cd lighttpd1.4
 ./autogen.sh
-./configure -C --prefix=/usr/local  
+./configure -C --prefix=/usr/local
 make -j 4
 make check
 sudo make install
@@ -63,3 +63,49 @@ make install
 lighttpd -D -f lighttpd.conf
 ```
 8. Visit http://127.0.0.1:8080/rest/hello
+
+## Build Redfish APP
+```bash
+cd redfish
+make clean
+make all
+sudo make install
+```
+## Run Redfish APP
+```bash
+lighttpd -D -f redfish/lighttpd.conf
+```
+## Redfish API Endpoints
+| Method | URI | Description |
+|--------|-----|-------------|
+| GET | `/redfish` | Redfish version |
+| GET | `/redfish/v1` | Service Root |
+| GET | `/redfish/v1/Systems` | Computer System Collection |
+| GET | `/redfish/v1/Systems/1` | Computer System Instance |
+| GET | `/redfish/v1/Chassis` | Chassis Collection |
+| GET | `/redfish/v1/Chassis/1` | Chassis Instance |
+| GET | `/redfish/v1/Managers` | Manager Collection |
+| GET | `/redfish/v1/Managers/1` | Manager Instance (BMC) |
+| GET | `/redfish/v1/AccountService` | Account Service |
+| GET | `/redfish/v1/SessionService` | Session Service |
+
+### Example
+```bash
+# Get Redfish version
+curl http://127.0.0.1:8080/redfish
+
+# Get Service Root
+curl http://127.0.0.1:8080/redfish/v1
+
+# Get Systems
+curl http://127.0.0.1:8080/redfish/v1/Systems
+
+# Get System details
+curl http://127.0.0.1:8080/redfish/v1/Systems/1
+
+# Get Chassis
+curl http://127.0.0.1:8080/redfish/v1/Chassis/1
+
+# Get Manager (BMC)
+curl http://127.0.0.1:8080/redfish/v1/Managers/1
+```

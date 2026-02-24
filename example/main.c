@@ -8,11 +8,11 @@ static void PrintEnv(char **envp)
     for( ; *envp != NULL; envp++) {
         DEBUG_PRINT("%s\n", *envp);
     }
-   
+
 }
 
 // 405 頁面的 HTML 內容
-const char *methodNotAllowedPage = 
+const char *methodNotAllowedPage =
     "<!DOCTYPE html>\n"
     "<html lang=\"en\">\n"
     "<head>\n"
@@ -53,10 +53,10 @@ void main(int argc, char *argv[], char *env[]) {
 
     // 初始化控制器
     Controller helloController;
-    cREST_init_controller(&helloController, "/hello", handleGet, NULL, NULL, NULL);
+    cREST_init_controller(&helloController, "/hello", handleGet, NULL, NULL, NULL, NULL);
 
-    // 註冊控制器
-    Controller *controllers[] = {&helloController};
+    // 註冊控制器 (NULL 結尾)
+    Controller *controllers[] = {&helloController, NULL};
     Controller *controller = NULL;
     Response *response = NULL;
     // FastCGI 初始化
@@ -73,7 +73,7 @@ void main(int argc, char *argv[], char *env[]) {
 
         // 處理請求
         controller =  cREST_dispatch(0, NULL, NULL, controllers);
-            
+
         if(controller) {
             // 將回應寫回 FastCGI
             response = &(controller->response);
