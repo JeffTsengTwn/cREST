@@ -71,48 +71,4 @@ lighttpd -D -f apps/example/lighttpd.conf
 Visit http://127.0.0.1:8080/rest/hello
 
 ### Redfish APP
-```bash
-cd apps/redfish
-make clean
-make all
-sudo make install
-```
-Run with lighttpd:
-```bash
-lighttpd -D -f apps/redfish/lighttpd.conf
-```
-
-#### Redfish API Endpoints
-| Method | URI | Description |
-|--------|-----|-------------|
-| GET | `/redfish` | Redfish version |
-| GET | `/redfish/v1` | Service Root |
-| GET | `/redfish/v1/Systems` | Computer System Collection |
-| GET | `/redfish/v1/Systems/1` | Computer System Instance |
-| GET | `/redfish/v1/Chassis` | Chassis Collection |
-| GET | `/redfish/v1/Chassis/1` | Chassis Instance |
-| GET | `/redfish/v1/Managers` | Manager Collection |
-| GET | `/redfish/v1/Managers/1` | Manager Instance (BMC) |
-| GET | `/redfish/v1/AccountService` | Account Service |
-| GET | `/redfish/v1/SessionService` | Session Service |
-
-#### Example
-```bash
-# Get Redfish version
-curl http://127.0.0.1:8080/redfish
-
-# Get Service Root
-curl http://127.0.0.1:8080/redfish/v1
-
-# Get Systems
-curl http://127.0.0.1:8080/redfish/v1/Systems
-
-# Get System details
-curl http://127.0.0.1:8080/redfish/v1/Systems/1
-
-# Get Chassis
-curl http://127.0.0.1:8080/redfish/v1/Chassis/1
-
-# Get Manager (BMC)
-curl http://127.0.0.1:8080/redfish/v1/Managers/1
-```
+See [apps/redfish/README.md](apps/redfish/README.md) for details.
